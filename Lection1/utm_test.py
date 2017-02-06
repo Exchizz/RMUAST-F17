@@ -70,15 +70,11 @@ print '\nPositional error from the two conversions [m]:'
 print '  latitude:  %.9f'  % (lat_pos_err)
 print '  longitude: %.9f'  % (lon_pos_err)
 
-
-lat = lat*pi/180
-test_lat = test_lat*pi/180
-
-lon = lon*pi/180
-test_lon = test_lon*pi/180
-
-d=acos(sin(lat)*sin(test_lat)+cos(lat)*cos(test_lat)*cos(lon-test_lon))
-
-nm = d*180*60/pi
-
-print "GCD:", nm*1.85200
+# calculate Great Circular Distance (input converted to radians)
+d=acos(sin(test_lat*(pi/180))*sin(lat*(pi/180))+cos(test_lat*(pi/180))*cos(lat*(pi/180))*cos(test_lon*(pi/180)-lon*(pi/180)))
+# convert from radians to nautical miles
+distance_nm=((180*60)/pi)*d
+# convert from nautical miles to kilometers
+distance_km=distance_nm*1.852
+# print distance
+print '\nGCD [km]: %.9f' % (distance_km)
