@@ -60,16 +60,7 @@ print '\nConverted back from UTM to geodetic [deg]:'
 print '  latitude:  %.10f'  % (lat)
 print '  longitude: %.10f'  % (lon)
 
-# detrmine conversion position error [m]
-lat_err = abs(lat-test_lat)
-lon_err = abs(lon-test_lon)
-earth_radius = 6378137.0 # [m]
-lat_pos_err = lat_err/360.0 * 2*pi*earth_radius
-lon_pos_err = lon_err/360.0 * 2*pi*(cos(lat)*earth_radius)
-print '\nPositional error from the two conversions [m]:'
-print '  latitude:  %.9f'  % (lat_pos_err)
-print '  longitude: %.9f'  % (lon_pos_err)
-
+# Solution #
 # calculate Great Circular Distance (input converted to radians)
 d=acos(sin(test_lat*(pi/180))*sin(lat*(pi/180))+cos(test_lat*(pi/180))*cos(lat*(pi/180))*cos(test_lon*(pi/180)-lon*(pi/180)))
 # convert from radians to nautical miles
