@@ -13,7 +13,7 @@ class NMEA:
 		return array
 
 nmea = NMEA()
-filename="nmea_trimble_gnss_eduquad_flight.txt"
+#filename="nmea_trimble_gnss_eduquad_flight.txt"
 filename="nmea_ublox_neo_24h_static_gpgga.txt"
 file = nmea.parse_nmea(filename)
 
