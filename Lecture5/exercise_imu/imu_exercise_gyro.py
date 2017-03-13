@@ -8,9 +8,9 @@
 
 ## Uncomment the file to read ##
 #fileName = 'nmea_data.txt'
-fileName = 'imu_razor_data_static.txt'
+#fileName = 'imu_razor_data_static.txt'
 #fileName = 'imu_razor_data_yaw_90deg.txt'
-#fileName = 'imu_razor_data_pitch_45deg.txt'
+fileName = 'imu_razor_data_pitch_45deg.txt'
 #fileName = 'imu_razor_data_roll_45deg.txt'
 
 ## IMU type
@@ -47,14 +47,26 @@ for line in f:
 
 	# keep track of the timestamps
 
-	if imuType == 'sparkfun_razor':
-		gyro_z = int(csv[7]) * 1/14.375 * pi/180.0;
+        if imuType == 'sparkfun_razor':
+                # import data from a SparkFun Razor IMU (SDU firmware)
+                acc_x = int(csv[2]) / 1000.0 * 4 * 9.82;
+                acc_y = int(csv[3]) / 1000.0 * 4 * 9.82;
+                acc_z = int(csv[4]) / 1000.0 * 4 * 9.82;
+                gyro_x = int(csv[5]) * 1/14.375 * pi/180.0;
+                gyro_y = int(csv[6]) * 1/14.375 * pi/180.0;
+                gyro_z = int(csv[7]) * 1/14.375 * pi/180.0;
 
-	elif imuType == 'vectornav_vn100':
-		gyro_z = float(csv[14])
+        elif imuType == 'vectornav_vn100':
+                # import data from a VectorNav VN-100 configured to output $VNQMR
+                acc_x = float(csv[9])
+                acc_y = float(csv[10])
+                acc_z = float(csv[11])
+                gyro_x = float(csv[12])
+                gyro_y = float(csv[13])
+                gyro_z = float(csv[14])
 
 
-	sum += gyro_z;
+	sum += gyro_x;
 	count+=1
 bias = sum/count;
 
@@ -112,8 +124,8 @@ for line in f:
 
 
 
-	dt = ts_prev-ts_now
-	angle += (gyro_z-bias)*dt
+	dt = ts_now-ts_prev
+	angle += (gyro_x-bias)*dt
 
 
 	# in order to show a plot use this function to append your value to a list:
@@ -133,6 +145,6 @@ if showPlot == True:
 	plt.plot(plotData)
 	#plt.plot(plotLine)
 
-	print bias
+	print "Bias: ",bias
 	plt.savefig('imu_exercise_plot_gyro_z_without_bias.png')
 	plt.show()
