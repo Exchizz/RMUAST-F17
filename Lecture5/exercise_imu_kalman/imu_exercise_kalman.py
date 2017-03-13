@@ -151,7 +151,7 @@ for line in f:
 
 	# Define last variables
 	prob_last = prob
-	pitch_last = kalman_estimate	
+	pitch_last = kalman_estimate
 
 	# define which value to plot as the absolute value (pitch/roll)
 	pitch_roll_plot = pitch
