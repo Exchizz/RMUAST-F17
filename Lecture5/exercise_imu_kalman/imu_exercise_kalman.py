@@ -19,7 +19,7 @@ imuType = 'sparkfun_razor'
 
 # other parameters
 showPlot = True
-show3DLiveView = True
+show3DLiveView = False
 show3DLiveViewInterval = 3
 
 ##### Insert initialize code below ###################
@@ -28,12 +28,16 @@ show3DLiveViewInterval = 3
 bias_gyro_x = 0.0690284197056 # [rad/measurement]
 
 # variances
-gyroVar = pi
-pitchVar = pi
+gyroVar = pi/2
+pitchVar = pi/2
 
 # Kalman filter start guess
 estAngle = -pi/4.0
 estVar = 0.0
+
+
+Rk = 0.3 # gyro
+Q_term = 0.015 # Accelomerator
 
 # Kalman filter housekeeping variables
 gyroVarAcc = 0.0
@@ -50,7 +54,6 @@ gyro_x_rel = 0.0
 gyro_y_rel = 0.0
 gyro_z_rel = 0.0
 
-Q_term = 0.00001
 
 pitch_hat_minus = 0.0
 pitch_hat_plus = 0.0
@@ -60,7 +63,7 @@ prob_last = 0.0
 state_error = 0.0
 kalman_estimate = 0.0
 kalman_gain = 0.0
-
+gyro_x_rel_last = 0.0
 # open the imu data file
 f = open (fileName, "r")
 
@@ -110,8 +113,8 @@ for line in f:
 
 	# subtract defined static bias for each gyro
 	gyro_x -= bias_gyro_x
-	gyro_y -= bias_gyro_y
-	gyro_z -= bias_gyro_z
+#	gyro_y -= bias_gyro_y
+#	gyro_z -= bias_gyro_z
 
 	##### Insert loop code below #########################
 
@@ -138,21 +141,23 @@ for line in f:
 	gyro_x_rel += gyro_x * dt
 
 	# Kalman prediction step (we have new data in each iteration)
-	error_state = last_pitch - pitch
-	pitch_hat_minus = last_pitch + error_state
+#	error_state = pitch - pitch_last
+	error_state = gyro_x_rel - gyro_x_rel_last;
+	pitch_hat_minus = pitch_last + error_state
 	prob = prob_last + Q_term
 
 	# Kalman correction step (we have new data in each iteration)
-	kalman_gain = prob / ( prob + 0.3 )
+	kalman_gain = prob / ( prob + Rk )
 
 	# define which value to plot as the Kalman filter estimate
-	kalman_estimate = pitch_hat_minus + kalman_gain * (gyro_x_rel - pitch_hat_minus)
+	kalman_estimate = pitch_hat_minus + kalman_gain * (pitch - pitch_hat_minus)
 	prob = prob_last * (1 - kalman_gain)
 
 	# Define last variables
 	prob_last = prob
 	pitch_last = kalman_estimate
 
+	gyro_x_rel_last = gyro_x_rel
 	# define which value to plot as the absolute value (pitch/roll)
 	pitch_roll_plot = pitch
 
