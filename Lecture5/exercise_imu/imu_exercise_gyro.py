@@ -8,8 +8,8 @@
 
 ## Uncomment the file to read ##
 #fileName = 'nmea_data.txt'
-#fileName = 'imu_razor_data_static.txt'
-fileName = 'imu_razor_data_yaw_90deg.txt'
+fileName = 'imu_razor_data_static.txt'
+#fileName = 'imu_razor_data_yaw_90deg.txt'
 #fileName = 'imu_razor_data_pitch_45deg.txt'
 #fileName = 'imu_razor_data_roll_45deg.txt'
 
@@ -20,10 +20,12 @@ imuType = 'sparkfun_razor'
 ## Variables for plotting ##
 showPlot = True
 plotData = []
+plotLine = []
 
 ## Initialize your variables here ##
 angle = 0.0
 dt = 0.0
+sum = 0.0
 
 ######################################################
 
@@ -37,8 +39,29 @@ f = open (fileName, "r")
 # initialize variables
 count = 0
 
-# looping through file
 
+for line in f:
+	# split the line into CSV formatted data
+	line = line.replace ('*',',') # make the checkum another csv value
+	csv = line.split(',')
+
+	# keep track of the timestamps
+
+	if imuType == 'sparkfun_razor':
+		gyro_z = int(csv[7]) * 1/14.375 * pi/180.0;
+
+	elif imuType == 'vectornav_vn100':
+		gyro_z = float(csv[14])
+
+
+	sum += gyro_z;
+	count+=1
+bias = sum/count;
+
+
+# looping through file
+count=0
+f.seek(0)
 for line in f:
 	count += 1
 
@@ -88,11 +111,17 @@ for line in f:
 	## Insert your code here ##
 
 
+
 	dt = ts_prev-ts_now
-	angle += gyro_z*dt
+	angle += (gyro_z-bias)*dt
+
 
 	# in order to show a plot use this function to append your value to a list:
 	plotData.append (angle*180.0/pi)
+	plotLine.append (0)
+	print angle
+
+
 
 	######################################################
 
@@ -102,5 +131,8 @@ f.close()
 # show the plot
 if showPlot == True:
 	plt.plot(plotData)
-	plt.savefig('imu_exercise_plot_gyro_z.png')
+	#plt.plot(plotLine)
+
+	print bias
+	plt.savefig('imu_exercise_plot_gyro_z_without_bias.png')
 	plt.show()
