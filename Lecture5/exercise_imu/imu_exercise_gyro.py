@@ -8,9 +8,9 @@
 
 ## Uncomment the file to read ##
 #fileName = 'nmea_data.txt'
-#fileName = 'imu_razor_data_static.txt'
+fileName = 'imu_razor_data_static.txt'
 #fileName = 'imu_razor_data_yaw_90deg.txt'
-fileName = 'imu_razor_data_pitch_45deg.txt'
+#fileName = 'imu_razor_data_pitch_45deg.txt'
 #fileName = 'imu_razor_data_roll_45deg.txt'
 
 ## IMU type
@@ -66,7 +66,7 @@ for line in f:
                 gyro_z = float(csv[14])
 
 
-	sum += gyro_x;
+	sum += gyro_z;
 	count+=1
 bias = sum/count;
 
@@ -125,7 +125,7 @@ for line in f:
 
 
 	dt = ts_now-ts_prev
-	angle += (gyro_x-bias)*dt
+	angle += (gyro_z-bias)*dt
 
 
 	# in order to show a plot use this function to append your value to a list:
@@ -146,5 +146,5 @@ if showPlot == True:
 	#plt.plot(plotLine)
 
 	print "Bias: ",bias
-	plt.savefig('imu_exercise_plot_gyro_z_without_bias.png')
+	plt.savefig('imu_exercise_plot_gyro_z_static_without_bias.png')
 	plt.show()
