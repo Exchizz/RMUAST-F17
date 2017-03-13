@@ -25,13 +25,11 @@ show3DLiveViewInterval = 3
 ##### Insert initialize code below ###################
 
 # approx. bias values determined by averaging over static measurements
-bias_gyro_x = 0.0 # [rad/measurement]
-bias_gyro_y = 0.0 # [rad/measurement]
-bias_gyro_z = 0.0 # [rad/measurement]
+bias_gyro_x = 0.0690284197056 # [rad/measurement]
 
 # variances
-gyroVar = 0.0
-pitchVar = 0.034906585
+gyroVar = pi
+pitchVar = pi
 
 # Kalman filter start guess
 estAngle = -pi/4.0
@@ -61,6 +59,7 @@ prob = 0.0
 prob_last = 0.0
 state_error = 0.0
 kalman_estimate = 0.0
+kalman_gain = 0.0
 
 # open the imu data file
 f = open (fileName, "r")
@@ -135,9 +134,8 @@ for line in f:
 	roll = atan2(-acc_x, acc_z)
 
 	# integrate gyro velocities to releative angles
-	gyro_x_rel +=
-	gyro_y_rel +=
-	gyro_z_rel +=
+	dt = ts_now - ts_prev
+	gyro_x_rel += gyro_x * dt
 
 	# Kalman prediction step (we have new data in each iteration)
 	error_state = last_pitch - pitch
@@ -145,12 +143,15 @@ for line in f:
 	prob = prob_last + Q_term
 
 	# Kalman correction step (we have new data in each iteration)
-	
-
-
+	kalman_gain = prob / ( prob + 0.3 )
 
 	# define which value to plot as the Kalman filter estimate
-	kalman_estimate =
+	kalman_estimate = pitch_hat_minus + kalman_gain * (gyro_x_rel - pitch_hat_minus)
+	prob = prob_last * (1 - kalman_gain)
+
+	# Define last variables
+	prob_last = prob
+	pitch_last = kalman_estimate	
 
 	# define which value to plot as the absolute value (pitch/roll)
 	pitch_roll_plot = pitch
