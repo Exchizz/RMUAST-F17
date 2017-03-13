@@ -30,15 +30,15 @@ bias_gyro_y = 0.0 # [rad/measurement]
 bias_gyro_z = 0.0 # [rad/measurement]
 
 # variances
-gyroVar = 
-pitchVar = 
+gyroVar = 0.0
+pitchVar = 0.034906585
 
 # Kalman filter start guess
 estAngle = -pi/4.0
-estVar = 
+estVar = 0.0
 
 # Kalman filter housekeeping variables
-gyroVarAcc = 
+gyroVarAcc = 0.0
 
 ######################################################
 
@@ -51,6 +51,16 @@ plotDataKalman = []
 gyro_x_rel = 0.0
 gyro_y_rel = 0.0
 gyro_z_rel = 0.0
+
+Q_term = 0.00001
+
+pitch_hat_minus = 0.0
+pitch_hat_plus = 0.0
+pitch_last = 0.0
+prob = 0.0
+prob_last = 0.0
+state_error = 0.0
+kalman_estimate = 0.0
 
 # open the imu data file
 f = open (fileName, "r")
@@ -72,14 +82,14 @@ for line in f:
 	line = line.replace ('*',',') # make the checkum another csv value
 	csv = line.split(',')
 
-	# keep track of the timestamps 
+	# keep track of the timestamps
 	ts_recv = float(csv[0])
-	if count == 1: 
+	if count == 1:
 		ts_now = ts_recv # only the first time
  	ts_prev = ts_now
 	ts_now = ts_recv
 
-	if imuType == 'sparkfun_razor': 
+	if imuType == 'sparkfun_razor':
 		# import data from a SparkFun Razor IMU (SDU firmware)
 		# outputs ENU reference system
 		acc_x = int(csv[2]) / 1000.0 * 4 * 9.82;
@@ -89,7 +99,7 @@ for line in f:
 		gyro_y = int(csv[6]) * 1/14.375 * pi/180.0;
 		gyro_z = int(csv[7]) * 1/14.375 * pi/180.0;
 
-	elif imuType == 'vectornav_vn100': 
+	elif imuType == 'vectornav_vn100':
 		# import data from a VectorNav VN-100 configured to output $VNQMR
 		# outputs NED reference system (therefore converted to ENU)
 		acc_y = float(csv[9])
@@ -99,7 +109,7 @@ for line in f:
 		gyro_x = float(csv[13])
 		gyro_z = -float(csv[14])
 
-	# subtract defined static bias for each gyro		
+	# subtract defined static bias for each gyro
 	gyro_x -= bias_gyro_x
 	gyro_y -= bias_gyro_y
 	gyro_z -= bias_gyro_z
@@ -108,7 +118,7 @@ for line in f:
 
 	# Variables available
 	# ----------------------------------------------------
-	# count		Current number of updates		
+	# count		Current number of updates
 	# ts_prev	Time stamp at the previous update
 	# ts_now	Time stamp at this update
 	# acc_x		Acceleration measured along the x axis
@@ -121,26 +131,26 @@ for line in f:
 	## Insert your code here ##
 
 	# calculate pitch (x-axis) and roll (y-axis) angles
-	pitch =  
-	roll = 
+	pitch = atan2(acc_y, sqrt(pow(acc_x, 2) + pow(acc_z, 2)) )
+	roll = atan2(-acc_x, acc_z)
 
 	# integrate gyro velocities to releative angles
-	gyro_x_rel +=    
+	gyro_x_rel +=
 	gyro_y_rel +=
 	gyro_z_rel +=
 
 	# Kalman prediction step (we have new data in each iteration)
-
-
-
+	error_state = last_pitch - pitch
+	pitch_hat_minus = last_pitch + error_state
+	prob = prob_last + Q_term
 
 	# Kalman correction step (we have new data in each iteration)
-
+	
 
 
 
 	# define which value to plot as the Kalman filter estimate
-	kalman_estimate = 
+	kalman_estimate =
 
 	# define which value to plot as the absolute value (pitch/roll)
 	pitch_roll_plot = pitch
@@ -167,7 +177,7 @@ for line in f:
 		plotDataAcc.append(pitch_roll_plot*180.0/pi)
 		plotDataKalman.append(kalman_estimate*180.0/pi)
 
-# closing the file	
+# closing the file
 f.close()
 
 # show the plot
@@ -186,5 +196,3 @@ if showPlot == True:
 	plt.draw()
 	print 'Press enter to quit'
 	raw_input()
-
-

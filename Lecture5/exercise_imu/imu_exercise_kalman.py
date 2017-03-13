@@ -7,27 +7,31 @@
 ##### Insert initialize code below ###################
 
 ## Uncomment the file to read ##
-fileName = 'nmea_data.txt'
+##fileName = 'nmea_data.txt'
 #fileName = 'imu_razor_data_static.txt'
 #fileName = 'imu_razor_data_yaw_90deg.txt'
-#fileName = 'imu_razor_data_pitch_45deg.txt'
+fileName = 'imu_razor_data_pitch_45deg.txt'
 #fileName = 'imu_razor_data_roll_45deg.txt'
 
 ## IMU type
-imuType = 'vectornav_vn100'
-#imuType = 'sparkfun_razor'
+#imuType = 'vectornav_vn100'
+imuType = 'sparkfun_razor'
 
 ## Variables for plotting ##
 showPlot = True
-plotData = []
+plotDataPitch = []
+plotDataKalman = []
 
 ## Initialize your variables here ##
-myValue = 0.0
+pitch = 0.0
+
+pitch_kalman = 0.0
+pitch_var = 2.0
 
 ######################################################
 
 # import libraries
-from math import pi, sqrt, atan2
+from math import pi, sqrt, atan2, pow
 import matplotlib.pyplot as plt
 
 # open the imu data file
@@ -45,9 +49,9 @@ for line in f:
 	line = line.replace ('*',',') # make the checkum another csv value
 	csv = line.split(',')
 
-	# keep track of the timestamps 
+	# keep track of the timestamps
 	ts_recv = float(csv[0])
-	if count == 1: 
+	if count == 1:
 		ts_now = ts_recv # only the first time
  	ts_prev = ts_now
 	ts_now = ts_recv
@@ -69,12 +73,12 @@ for line in f:
 		gyro_x = float(csv[12])
 		gyro_y = float(csv[13])
 		gyro_z = float(csv[14])
-	 		
+
 	##### Insert loop code below #########################
 
 	# Variables available
 	# ----------------------------------------------------
-	# count		Current number of updates		
+	# count		Current number of updates
 	# ts_prev	Time stamp at the previous update
 	# ts_now	Time stamp at this update
 	# acc_x		Acceleration measured along the x axis
@@ -85,23 +89,23 @@ for line in f:
 	# gyro_z	Angular velocity measured about the z axis
 
 	## Insert your code here ##
+	pitch = atan2(acc_y, sqrt(pow(acc_x, 2) + pow(acc_z, 2)) )
 
 
-
-	myValue =
 
 	# in order to show a plot use this function to append your value to a list:
-	plotData.append (myValue*180.0/pi)
+	plotDataPitch.append (pitch*180.0/pi)
 
 	######################################################
 
-# closing the file	
+# closing the file
 f.close()
 
 # show the plot
 if showPlot == True:
-	plt.plot(plotData)
+	plt.plot(plotDataPitch)
+	plt.plot(plotDataRoll)
+	plt.plot(plotDataPitchAvg)
+	plt.plot(plotDataRollAvg)
 	plt.savefig('imu_exercise_plot.png')
 	plt.show()
-
-
