@@ -8,8 +8,8 @@
 
 ## Uncomment the file to read ##
 #fileName = 'nmea_data.txt'
-fileName = 'imu_razor_data_static.txt'
-#fileName = 'imu_razor_data_yaw_90deg.txt'
+#fileName = 'imu_razor_data_static.txt'
+fileName = 'imu_razor_data_yaw_90deg.txt'
 #fileName = 'imu_razor_data_pitch_45deg.txt'
 #fileName = 'imu_razor_data_roll_45deg.txt'
 
@@ -143,8 +143,8 @@ f.close()
 # show the plot
 if showPlot == True:
 	plt.plot(plotData)
-	#plt.plot(plotLine)
+	plt.plot(plotLine)
 
 	print "Bias: ",bias
-	plt.savefig('imu_exercise_plot_gyro_z_static_without_bias.png')
+	plt.savefig('imu_exercise_plot_gyro_z_90deg_without_bias.png')
 	plt.show()
