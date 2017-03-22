@@ -1,0 +1,8 @@
+prefix=/home/chrellep/ROS_workspaces/mavros_lecture_ws/devel
+
+Name: mavros_msgs
+Description: Description of mavros_msgs
+Version: 0.18.7
+Cflags: -I/home/chrellep/ROS_workspaces/mavros_lecture_ws/devel/include -I/home/chrellep/ROS_workspaces/mavros_lecture_ws/src/mavros/mavros_msgs/include
+Libs: -L/home/chrellep/ROS_workspaces/mavros_lecture_ws/devel/lib 
+Requires: geometry_msgs message_runtime std_msgs

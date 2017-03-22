@@ -1,0 +1,8 @@
+prefix=/home/chrellep/ROS_workspaces/mavros_lecture_ws/devel
+
+Name: libmavconn
+Description: Description of libmavconn
+Version: 0.18.7
+Cflags: -I/home/chrellep/ROS_workspaces/mavros_lecture_ws/src/mavros/libmavconn/include -I/usr/include -I/opt/ros/kinetic/include
+Libs: -L/home/chrellep/ROS_workspaces/mavros_lecture_ws/devel/lib -lmavconn -l:/usr/lib/x86_64-linux-gnu/libboost_system.so -l:/usr/lib/x86_64-linux-gnu/libconsole_bridge.so
+Requires: 

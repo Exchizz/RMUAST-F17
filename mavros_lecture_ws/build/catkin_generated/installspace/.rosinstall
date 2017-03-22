@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/chrellep/ROS_workspaces/mavros_lecture_ws/install/setup.sh

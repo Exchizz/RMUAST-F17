@@ -1,0 +1,2 @@
+MarkerLocator:control_toolbox:mavros/libmavconn:mavros/mavros:mavros/mavros_extras:mavros/mavros_msgs:mavros/test_mavros:off_board:realtime_tools
+-DCATKIN_DEVEL_PREFIX=/home/chrellep/ROS_workspaces/mavros_lecture_ws/devel -DCMAKE_INSTALL_PREFIX=/home/chrellep/ROS_workspaces/mavros_lecture_ws/install -G Unix Makefiles

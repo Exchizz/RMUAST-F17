@@ -1,0 +1,8 @@
+prefix=/home/chrellep/ROS_workspaces/mavros_lecture_ws/devel
+
+Name: markerlocator
+Description: Description of markerlocator
+Version: 0.0.0
+Cflags: -I/home/chrellep/ROS_workspaces/mavros_lecture_ws/devel/include
+Libs: -L/home/chrellep/ROS_workspaces/mavros_lecture_ws/devel/lib 
+Requires: 
