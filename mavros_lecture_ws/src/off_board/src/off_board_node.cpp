@@ -154,7 +154,7 @@ int main(int argc, char **argv)
 
               std::cout << "image width: " << imgwidth << std::endl;
               std::cout << "relative posy: " << camy-imgheight/2 << " posx: " << camx-imgwidth/2 << std::endl;
-              
+              /*
               if((camy-imgheight/2) > 0){
                 std::cout << "Go back" << std::endl;
                 X-=0.1;
@@ -168,6 +168,10 @@ int main(int argc, char **argv)
               } else {
                 Y+=0.1;
               }
+              */
+
+              X -= (camy-imgheight/2)*0.002;
+              Y -= (camx-imgwidth/2)*0.002;
 
               std::cout << "X: " << X << " Y: " << Y << std::endl;
 
