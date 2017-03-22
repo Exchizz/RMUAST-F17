@@ -7,6 +7,15 @@
 #include <mavros_msgs/CommandBool.h>
 #include <mavros_msgs/SetMode.h>
 #include <mavros_msgs/State.h>
+#include "opencv2/opencv.hpp"
+#include "../headers/image_converter.hpp"
+
+#define COLOR       0
+
+using namespace std;
+using namespace cv;
+
+
 
 mavros_msgs::State current_state;
 geometry_msgs::PoseStamped localposemsg;
@@ -18,7 +27,56 @@ void localpose_cb(const geometry_msgs::PoseStamped::ConstPtr& msg){
   localposemsg = *msg;
 }
 
+void onmouse(int event, int x, int y, int flags, void* param){
+    cv::Mat _img = *((cv::Mat*)(param));
+    cv::Mat img = _img.clone();
+
+    // Left click
+    if (event == CV_EVENT_LBUTTONDOWN) {
+        cv::Vec3b intensity = img.at<cv::Vec3b>(y, x);
+        std::cout << "RGB = (" << int(intensity.val[2]) << ", " <<
+            int(intensity.val[1]) << ", " << int(intensity.val[0]) << ")" << std::endl;
+    }
+}
+
+bool find_center(Mat &image, Point2f &result){
+    Mat segmented;
+
+    inRange(image ,Scalar(0,0,200), Scalar(10,10,255), segmented);
+
+    vector<vector<Point> > contours;
+    vector<Vec4i> hierarchy;
+
+    // Find contours
+    findContours( segmented, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+
+    /// Get the moments
+    vector<Moments> mu(contours.size() );
+    for( int i = 0; i < contours.size(); i++ )
+     { mu[i] = moments( contours[i], false ); }
+
+    ///  Get the mass centers:
+    vector<Point2f> mc( contours.size() );
+    for( int i = 0; i < contours.size(); i++ )
+     { mc[i] = Point2f( mu[i].m10/mu[i].m00 , mu[i].m01/mu[i].m00 ); }
+
+    /// Draw contours
+    // for( int i = 0; i< contours.size(); i++ )
+    //  {
+    //    Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+    //    drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point() );
+    //    circle( drawing, mc[i], 4, color, -1, 8, 0 );
+    //  }
+
+    if(mc.empty()){
+        return false;
+      }
+    result = mc[0];
+    return true;
+}
+
 int main(int argc, char **argv){
+
     ros::init(argc, argv, "offb_node");
     ros::NodeHandle nh;
 
@@ -30,6 +88,8 @@ int main(int argc, char **argv){
     ros::ServiceClient arming_client = nh.serviceClient<mavros_msgs::CommandBool>("mavros/cmd/arming");
     ros::ServiceClient set_mode_client = nh.serviceClient<mavros_msgs::SetMode>("mavros/set_mode");
 
+    ImageConverter image_conv("/iris/camera/image_raw", COLOR);
+
     //the setpoint publishing rate MUST be faster than 2Hz
     ros::Rate rate(20.0);
 
@@ -40,38 +100,12 @@ int main(int argc, char **argv){
     }
 
 
-    int camx = 0; // px
-    int camy = 0; // px
-    int d = 2; // meters
-    float f = 0.01;
-
-    int imgwidth = 0;
-    int imgheight = 0;
-
-// topic /mavros/local_position/pose
-  // geometry_msgs/PoseStamped
-    float X = (camx*d)/f;
-    float Y = (camy*d)/f;
-
-    X = localposemsg.pose.position.x + X - imgwidth/2;
-    Y = localposemsg.pose.position.y + Y - imgheight/2;
-
-    bool Markerfound = true;
-
-    geometry_msgs::PoseStamped pose;
-
-    if(Markerfound){
-      pose.pose.position.x = X; // Meters
-      pose.pose.position.y = Y; // Meters
-      pose.pose.position.z = d; // Meters
-    } else {
-      pose.pose.position.x = 0; // Meters
-      pose.pose.position.y = 0; // Meters
-      pose.pose.position.z = d; // Meters
-    }
-
     //send a few setpoints before starting, or else you won't be able to switch to offboard mode
     for(int i = 100; ros::ok() && i > 0; --i){
+        geometry_msgs::PoseStamped pose;
+        pose.pose.position.x = 0; // Meters
+        pose.pose.position.y = 0; // Meters
+        pose.pose.position.z = 2; // Meters
         local_pos_pub.publish(pose);
         ros::spinOnce();
         rate.sleep();
@@ -84,6 +118,7 @@ int main(int argc, char **argv){
     arm_cmd.request.value = true;
 
     ros::Time last_request = ros::Time::now();
+
 
     while(ros::ok()){
         if( current_state.mode != "OFFBOARD" &&
@@ -102,7 +137,51 @@ int main(int argc, char **argv){
             }
         }
 
-        local_pos_pub.publish(pose);
+        cv::Mat image = image_conv.get_image();
+
+        std::cout << __LINE__ << "I'm here " << std::endl;
+        if(!image.empty()){
+            Point2f center;
+            if(find_center(image, center)){
+                circle(image, center, 10, Scalar(255,255,255));
+                cv::imshow("Image", image);
+                waitKey(1);
+                int camx = center.x; // px
+                int camy = center.y; // px
+                int d = 2; // meters
+                float f = 0.01;
+
+                int imgwidth = image.cols;
+                int imgheight = image.rows;
+
+            // topic /mavros/local_position/pose
+              // geometry_msgs/PoseStamped
+                float X = (camx*d)/f;
+                float Y = (camy*d)/f;
+
+                X = localposemsg.pose.position.x + X - imgwidth/2;
+                Y = localposemsg.pose.position.y + Y - imgheight/2;
+
+                bool Markerfound = true;
+
+                geometry_msgs::PoseStamped pose;
+
+                if(Markerfound){
+                  pose.pose.position.x = X; // Meters
+                  pose.pose.position.y = Y; // Meters
+                  pose.pose.position.z = d; // Meters
+                } else {
+                  pose.pose.position.x = 0; // Meters
+                  pose.pose.position.y = 0; // Meters
+                  pose.pose.position.z = d; // Meters
+                }
+
+                local_pos_pub.publish(pose);
+
+            }
+
+        } else
+            cout << "Image empty" << endl;
 
         ros::spinOnce();
         rate.sleep();
