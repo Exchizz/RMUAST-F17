@@ -18,7 +18,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(off_board_node src/off_board_node.cpp)
+add_executable(off_board_node src/off_board_node.cpp src/image_converter.cpp)
 target_link_libraries(${PROJECT_NAME}_node
   ${catkin_LIBRARIES}
  )
