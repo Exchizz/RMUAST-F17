@@ -136,6 +136,10 @@ int main(int argc, char **argv)
 
         if(!image.empty()){
           Point2f center;
+
+          float X_pre_error = 0.0;
+          float Y_pre_error = 0.0;
+
           if(find_center(image, center)){
               int camx = center.x; // px
               int camy = center.y; // px
@@ -145,9 +149,7 @@ int main(int argc, char **argv)
               circle(image, center, 10, Scalar(255,255,255));
               circle(image, Point2f(imgwidth/2, imgheight/2), 40, Scalar(255,0,255));
 
-
               int d = 2; // meters
-
 
               float Y = localposemsg.pose.position.y;
               float X = localposemsg.pose.position.x;
@@ -170,9 +172,51 @@ int main(int argc, char **argv)
               }
               */
 
-              X -= (camy-imgheight/2)*0.002;
-              Y -= (camx-imgwidth/2)*0.002;
+              /////////////////////////////////////////////////////////////////
+              /////////////////////////////////////////////////////////////////
+              float K_p = 0.001;
 
+              float K_i = 0.06;
+              float dt = 0.1;
+              float X_integral = 0.0;
+              float Y_integral = 0.0;
+
+              float K_d = 0.0001;
+              float X_derivative = 0.0;
+              float Y_derivative = 0.0;
+
+              float X_p = 0.0;
+              float Y_p = 0.0;
+              float X_i = 0.0;
+              float Y_i = 0.0;
+              float X_d = 0.0;
+              float Y_d = 0.0;
+
+              //Proportional term, error * K_p
+              X_p = (camy-imgheight/2)*K_p;
+              Y_p = (camx-imgwidth/2)*K_p;
+              // Integrational term
+              X_integral += (camy-imgheight/2) * dt;
+              X_i = K_i * X_integral;
+
+              Y_integral += (camx-imgwidth/2) * dt;
+              Y_i = K_i * Y_integral;
+
+              // Derivative term
+              X_derivative = ((camy-imgheight/2) - X_pre_error) / dt;
+              X_d = K_d * X_derivative;
+
+              Y_derivative = ((camx-imgwidth/2) - Y_pre_error) / dt;
+              Y_d = K_d * Y_derivative;
+
+              //Total output
+              X -= X_p + X_i + X_d;
+              Y -= Y_p + Y_i + Y_d;
+
+              X_pre_error = (camy-imgheight/2);
+              Y_pre_error = (camx-imgwidth/2);
+              /////////////////////////////////////////////////////////////////
+              /////////////////////////////////////////////////////////////////
               std::cout << "X: " << X << " Y: " << Y << std::endl;
 
               pose.pose.position.x = X; // Meters
@@ -190,3 +234,4 @@ int main(int argc, char **argv)
 
     return 0;
 }
+
