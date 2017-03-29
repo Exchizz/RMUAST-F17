@@ -131,8 +131,8 @@ f.close()
 # show the plot
 if showPlot == True:
 	plt.plot(plotDataPitch)
-	plt.plot(plotDataRoll)
+#	plt.plot(plotDataRoll)
 	plt.plot(plotDataPitchAvg)
-	plt.plot(plotDataRollAvg)
+#	plt.plot(plotDataRollAvg)
 	plt.savefig('imu_exercise_plot.png')
 	plt.show()
