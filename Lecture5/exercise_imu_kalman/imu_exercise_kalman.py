@@ -19,7 +19,7 @@ imuType = 'sparkfun_razor'
 
 # other parameters
 showPlot = True
-show3DLiveView = False
+show3DLiveView = True
 show3DLiveViewInterval = 3
 
 ##### Insert initialize code below ###################
@@ -37,7 +37,7 @@ estVar = 0.0
 
 
 Rk = 0.3 # gyro
-Q_term = 0.015 # Accelomerator
+Q_term = 0.025 # Accelomerator
 
 # Kalman filter housekeeping variables
 gyroVarAcc = 0.0
