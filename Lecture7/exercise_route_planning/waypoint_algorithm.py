@@ -1,11 +1,11 @@
 # Waypoint algorithm
 import math
-
 from export_kml import kmlclass
-
 from utm import utmconv
 from math import fabs
+from qgs_waypoint_generator import GQCGenerator
 
+# Instantiate utm<->geodetic class
 utm = utmconv();
 
 
@@ -24,6 +24,9 @@ for line in f:
 new_waypoints = []
 new_waypoints.append(0)
 new_waypoints.append(len(data_waypoints)-1)
+
+
+
 
 epsilon = 2
 max_points = 32
@@ -90,16 +93,30 @@ MAV_CMD_NAV_TAKEOFF = 22
 
 
 
+
+
 # export to QGC waypoint list
-f = open ('waypoints.txt', 'w')
-f.write ('QGC WPL 120\n')
-lat = wpts[0][0]
-lon = wpts[0][1]
-alt = wpts[0][2]
+#f = open ('waypoints.txt', 'w')
+#f.write ('QGC WPL 120\n')
+#lat = wpts[0][0]
+#lon = wpts[0][1]
+#alt = wpts[0][2]
 
-f.write ('%d\t%d\t%d\t%d\t%.2f\t%.0f\t%.2f\t%.2f\t%.8f\t%.8f\t%.3f\t%d\n' % (0, qgc_dunno, qgc_frame_takeoff, MAV_CMD_NAV_TAKEOFF, qgc_radius, qgc_loiter*1000, qgc_poi_heading, qgc_vert_vmax, lat, lon, alt, qgc_dunno2))
+#f.write ('%d\t%d\t%d\t%d\t%.2f\t%.0f\t%.2f\t%.2f\t%.8f\t%.8f\t%.3f\t%d\n' % (0, qgc_dunno, qgc_frame_takeoff, MAV_CMD_NAV_TAKEOFF, qgc_radius, qgc_loiter*1000, qgc_poi_heading, qgc_vert_vmax, lat, lon, alt, qgc_dunno2))
 
-for wpt in wpts:
-        f.write ('%d\t%d\t%d\t%d\t%.2f\t%.0f\t%.2f\t%.2f\t%.8f\t%.8f\t%.3f\t%d\n' % (i+1, qgc_dunno, qgc_frame_wpt, MAV_CMD_NAV_WAYPOINT, qgc_radius, qgc_loiter*1000, qgc_hori_vmax, qgc_yaw, wpt[0], wpt[1], wpt[2], qgc_dunno2))
-f.close
+with GQCGenerator(filename="waypoints.txt",qgc_loiter=2) as qgc:
+    lat = wpts[0][0]
+    lon = wpts[0][1]
+    alt = wpts[0][2]
+    att = 0;
 
+    qgc.AddTakeOff(lat, lon, alt, att)
+    for wpt in wpts:
+        lat = wpt[0]
+        lon = wpt[1]
+        alt = wpt[2]
+
+        att = 0
+        qgc.AddWaypoint(lat, lon, alt, att);
+        #f.write ('%d\t%d\t%d\t%d\t%.2f\t%.0f\t%.2f\t%.2f\t%.8f\t%.8f\t%.3f\t%d\n' % (i+1, qgc_dunno, qgc_frame_wpt, MAV_CMD_NAV_WAYPOINT, qgc_radius, qgc_loiter*1000, qgc_hori_vmax, qgc_yaw, wpt[0], wpt[1], wpt[2], qgc_dunno2))
+    #f.close
