@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+<name>Waypoints</name>
+<description>Waypoints</description>
+<Style id="red">
+  <LineStyle>
+    <color>ff0000ff</color>
+    <width>3.0</width>
+  </LineStyle>
+</Style>
+<Style id="green">
+  <LineStyle>
+    <color>ff00ff00</color>
+    <width>3.0</width>
+  </LineStyle>
+</Style>
+<Style id="blue">
+  <LineStyle>
+    <color>ffff0000</color>
+    <width>3.0</width>
+  </LineStyle>
+</Style>
+<Style id="cyan">
+  <LineStyle>
+    <color>ffffff00</color>
+    <width>3.0</width>
+  </LineStyle>
+</Style>
+<Style id="yellow">
+  <LineStyle>
+    <color>ff00ffff</color>
+    <width>3.0</width>
+  </LineStyle>
+</Style>
+<Style id="grey">
+  <LineStyle>
+    <color>ff888888</color>
+    <width>3.0</width>
+  </LineStyle>
+</Style>
+<Placemark>
+<name>test</name>
+<description>test2</description>
+<styleUrl>#blue</styleUrl>
+<LineString>
+<altitudeMode>relativeToGround</altitudeMode>
+<coordinates>
+10.3249970207,055.4717018482,8.580
+10.3250802207,055.4715967482,16.522
+10.3250941207,055.4714929483,18.293
+10.3250177207,055.4714222483,19.123
+10.3249201207,055.4713941483,20.970
+10.3246863207,055.4713874482,26.286
+10.3248083207,055.4713655482,29.141
+10.3248938207,055.4714282483,28.336
+10.3249650207,055.4717407483,12.173
+10.3246406206,055.4712863482,-8.162
+10.3246182207,055.4711779483,-22.060
+10.3246953207,055.4714155482,-16.866
+10.3248969207,055.4716584482,6.802
+</coordinates>
+</LineString>
+</Placemark>
+</Document>
+</kml>

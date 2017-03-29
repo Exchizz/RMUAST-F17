@@ -1,8 +1,0 @@
-prefix=/home/chrellep/ROS_workspaces/mavros_lecture_ws/devel
-
-Name: off_board
-Description: Description of off_board
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/chrellep/ROS_workspaces/mavros_lecture_ws/devel/lib 
-Requires: 

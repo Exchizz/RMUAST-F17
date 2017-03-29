@@ -1,8 +1,0 @@
-prefix=/home/chrellep/ROS_workspaces/mavros_lecture_ws/devel
-
-Name: realtime_tools
-Description: Description of realtime_tools
-Version: 1.9.2
-Cflags: -I/home/chrellep/ROS_workspaces/mavros_lecture_ws/src/realtime_tools/include
-Libs: -L/home/chrellep/ROS_workspaces/mavros_lecture_ws/devel/lib -lrealtime_tools
-Requires: roscpp rospy
