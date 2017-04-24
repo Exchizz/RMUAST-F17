@@ -1,0 +1,9 @@
+In order to spoof the onboard GPS, the CAN-bus was chosen as input to AQ. 
+The CAN-bus is already implemented and widely used on a ViaCopter drone to communicate between AQ and hardware like ESCs, PDB etc. Much time was spend reading through the source code and trying to figure out how the protocol works.
+The developers behind AQ says, that the code is the documentation and thereby have not written any real documentation. \\
+Figuring out how it works was done using debugging utilities such as breakpoints and looking at the content of the different memory locations in CrossWorks.\\
+More debugging tricks can be seen in appendix \ref{app:debugging}. 
+To further investigate the protocol a PEAK-CAN adapter were connected to a Ladybird drone and several python scripts were developed to send and receive messages from AQ. \\
+The author did not go into details about messages used between AQ $\leftrightarrow$ ESC's and AQ $\leftrightarrow$ OSD.\\
+
+\input{can_autoquad.tex}
