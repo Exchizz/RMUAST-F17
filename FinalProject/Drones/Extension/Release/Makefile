@@ -80,7 +80,7 @@
 
 PROJECT=main
 
-SOURCES=AutoQuad.c  can.c  ESP8266.c  led.c  main.c  MessageCreator.c  queue.c  scheduler.c  Session.c  systick.c  uart.c  unpack_crc.c
+SOURCES=AutoQuad.c  can.c  ESP8266.c  led.c  main.c  MessageCreator.c  queue.c  scheduler.c  Session.c  systick.c  uart.c  unpack_crc.c crc/crc.c
 
 MMCU=at90can128
 
@@ -126,7 +126,7 @@ flash: $(PROJECT).hex
 
 	#$(AVRDUDE) -U flash:w:$(PROJECT).hex
 
-	$(AVRDUDE) -F -p m88 -c usbasp -U flash:w:$(PROJECT).hex
+	$(AVRDUDE) -F -p c128 -c usbasp -U flash:w:$(PROJECT).hex
 
 
 

@@ -61,16 +61,16 @@ void is_alive_task(uint8_t my_state){
 		QueueSend(&Queue_Uart0_Tx,&ch);
 	}
 	*/
-	switch(my_state){
-	case 0:
-		INT_LED_ON_YELLOW;
-		set_state( 1 );
-		break;
-	case 1:
-		INT_LED_OFF_YELLOW;
-		set_state( 0 );
-		INT_RESET_HIGH;
-		break;
-	}
+	// switch(my_state){
+	// case 0:
+	// 	INT_LED_ON_YELLOW;
+	// 	set_state( 1 );
+	// 	break;
+	// case 1:
+	// 	INT_LED_OFF_YELLOW;
+	// 	set_state( 0 );
+	// 	INT_RESET_HIGH;
+	// 	break;
+	// }
 	wait( 1000 );
 }
