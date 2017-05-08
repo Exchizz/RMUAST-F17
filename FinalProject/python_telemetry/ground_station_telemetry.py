@@ -14,36 +14,39 @@ import socket
 import struct
 import serial
 from time import sleep
-from crc16 import crc16
 from slip_protocol import slip_protocol
 
-# Connect to socket
+# Connect to server
 try:
-    socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    socket.connect(('127.0.0.1', 1337))
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.connect(('127.0.0.1', 1337))
 except Exception as error:
     print error
-    print 'Failed to create socket'
+    print 'Failed to connect'
     sys.exit()
+
+# Variables
+# We want X, Y, and Z position with a quality in percentage
+x = 0.0
+y = 0.0
+z = 0.0
+q = 0       # Quality
 
 # Create serial object
 #telemetry = serial.Serial(PORT_NAME, BAUD_RATE)
 
 # Packing variables
-packet_format = 'dd'
+packet_format = 'dddi'
 packet_size = struct.calcsize(packet_format)
 
-# Create CRC and slip
-crc = crc16()
+# Create slip
 slip = slip_protocol()
 
-loop = 1
-while loop:
-
+while True:
     data_msg = []
     bytes_recd = 0
     while bytes_recd < MSGLEN:
-        data = socket.recv(DATALEN)
+        data = server.recv(DATALEN)
         if data == b'':
             print "Socket is broken - Closing program"
             break
@@ -53,26 +56,62 @@ while loop:
     print "-- Recieved --"
     print data_msg
 
-    msg_as_bytes = struct.pack('dd', data_msg[0] , data_msg[1])
+    # Extract data to x, y z, and q.
+    x = 1
+    y = 2
+    z = 3
+    q = 4
 
-    crc_result = crc.calc(msg_as_bytes)
-    crc_out = chr(crc_result >> 8) + chr(crc_result & 0x00ff)
+    msg_as_bytes = struct.pack('dddi', x, y, z, q)
 
-    msg_out = slip.encode(msg_as_bytes + crc_out)
+    msg_out = slip.encode(msg_as_bytes)
 
     print "-- Sending --"
     print type(msg_out)
     print "msg_out: ", msg_out
-    print "crc: ",crc_out
     #telemetry.send(msg_out)
 
+    # ---- RECEIVING END ------
     print "-- Unpacked --"
-    data_recv, crc_recv = msg_out[:MSGLEN], msg_out[MSGLEN:]
-    print "Data: ", data_recv
-    print "CRC: ", crc_recv
-    msg_as_data = struct.unpack('dd', msg_out[:packet_size])
-    print msg_as_data
+    data_recv = msg_out;
+    msg_recv = []
+    started = False
+    escaped = False
 
-    loop = loop - 1
+    for byte in data_recv:
+        # If message has been started.
+        if started:
+            # Check for ESC.
+            if byte == slip.SLIP_ESC:
+                escaped = True
+
+            # When ESC was just received, append according to next byte.
+            if escaped:
+                if byte == slip.SLIP_ESC_ESC:
+                    msg_recv.append(slip.SLIP_ESC)
+                elif byte == slip.SLIP_ESC_END:
+                    msg_recv.append(slip.SLIP_END)
+                escaped = False
+
+            # Check for END.
+            elif byte == slip.SLIP_END:
+                started = False
+
+            # Otherwise just append the byte.
+            else:
+                msg_recv.append(byte)
+
+        # Start or stop message when END is received.
+        elif byte == slip.SLIP_END:
+                started = True
+
+    print msg_recv
+
+    msg_recv_unpacked = struct.unpack('dddi', ''.join(msg_recv))
+
+    print msg_recv_unpacked
+
+    #msg_as_data = struct.unpack('dddi', msg_out[:packet_size])
+    #print msg_as_data
 
 print "Program Closing"

@@ -6,9 +6,9 @@
 class slip_protocol():
 	def __init__(self):
 		self.SLIP_END = "C0".decode("hex")
-        	self.SLIP_ESC = "DB".decode("hex")
-        	self.SLIP_ESC_END = "DC".decode("hex")
-        	self.SLIP_ESC_ESC = "DD".decode("hex")
+		self.SLIP_ESC = "DB".decode("hex")
+		self.SLIP_ESC_END = "DC".decode("hex")
+		self.SLIP_ESC_ESC = "DD".decode("hex")
 
 	def encode(self, packet):
 		# Encode an initial END character to flush out any data that
