@@ -20,7 +20,7 @@
 #define SLIP_ESC_END	220    /* ESC ESC_END means END data byte */
 #define SLIP_ESC_ESC	221    /* ESC ESC_ESC means ESC data byte */
 
-#define SLIP_INBUF_LEN	34
+#define SLIP_INBUF_LEN	40
 
 #define SLIP_STATE_STD	0
 #define SLIP_STATE_ESC	1

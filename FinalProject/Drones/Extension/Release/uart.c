@@ -59,22 +59,22 @@ extern void uart_init(int uart){
 	switch(uart){
 	case USART_0:
 		UCSR0B = (1<<TXEN0)|(1<<RXEN0);     /* enable tx and rx */
-		UBRR0H = (unsigned char) ((8)>>8);  /* 8 is from AT90can128 table, page 202. 8 mhz, 57600 bps */
-		UBRR0L = (unsigned char) (8);       /* 8 is from AT90can128 table, page 202. 8 mhz, 57600 bps */
+		UBRR0H = (unsigned char) ((16)>>8);  /* 8 is from AT90can128 table, page 202. 8 mhz, 57600 bps */
+		UBRR0L = (unsigned char) (16);       /* 8 is from AT90can128 table, page 202. 8 mhz, 57600 bps */
 		UCSR0C = (1<<UCSZ00)|(1<<UCSZ01); 	/* asynchronous 8N1 */
 		//UCSR0B |= (1 << RXCIE0); 			/* Enable Rx interrupt */
 		break;
 	case USART_1:
 		UCSR1B = (1<<TXEN0)|(1<<RXEN0);     /* enable tx and rx */
-		UBRR1H = (unsigned char) ((51)>>8);  /* 8 is from AT90can128 table, page 202. 8 mhz, 57600 bps */
-		UBRR1L = (unsigned char) (51);       /* 8 is from AT90can128 table, page 202. 8 mhz, 57600 bps */
+		UBRR1H = (unsigned char) ((16)>>8);  /* 8 is from AT90can128 table, page 202. 8 mhz, 57600 bps */
+		UBRR1L = (unsigned char) (16);       /* 8 is from AT90can128 table, page 202. 8 mhz, 57600 bps */
 		UCSR1C = (1<<UCSZ00)|(1<<UCSZ01); 	/* asynchronous 8N1 */
 		//UCSR1B |= (1 << RXCIE1); 			/* Enable Rx interrupt */
 		break;
 	}
 
 	/* enable tx and rx */
-//	UCSRB_REG = (1<<TXEN_BIT)|(1<<RXEN_BIT);
+   //UCSRB_REG = (1<<TXEN_BIT)|(1<<RXEN_BIT);
 	/* set baud rate */
 //	UBRRH_REG = (unsigned char) ((8)>>8);
 //	UBRRL_REG = (unsigned char) (8); /* 8 is from AT90can128 table, page 202. 8 mhz, 57600 bps */
@@ -88,19 +88,21 @@ extern void uart_init(int uart){
 #endif
 
 	/* init rx  */
-	//UCSRB_REG |= (1 << RXCIE_BIT);
+	UCSR1B |= (1 << RXCIE1);
+	UCSR0B |= (1 << RXCIE0);
 
+
+	//	UCSRB_REG |= (1 << TXCIE_BIT); /* enable tx interrupt */
+}
+
+
+ISR (USART0_RX_vect){
+		char ch = UDR0;
+		QueueSend(&Queue_Uart0_Rx, &ch);
+}
+
+ISR (USART1_RX_vect){
+		char ch = UDR1;
+		QueueSend(&Queue_Uart1_Rx, &ch);
 }
 /****************************** End Of Module *******************************/
-
-
-
-
-
-
-
-
-
-
-
-

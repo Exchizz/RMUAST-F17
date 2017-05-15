@@ -14,9 +14,11 @@ int slip_in_ptr;
 /* local variables */
 static char slip_state;
 void task_slip_decode_crc_task(uint8_t my_state){
-	char ch;
+	uint8_t ch;
 	bool new_packet = false;
 	while(QueueReceive(&Queue_Uart1_Rx, &ch)) /* handle RX buffer */{
+
+		//QueueSend(&Queue_Uart0_Tx, &ch);
 		if (slip_state == SLIP_STATE_STD){
 			switch (ch){
 			case SLIP_END:
@@ -54,8 +56,17 @@ void task_slip_decode_crc_task(uint8_t my_state){
 	}
 
 	if(new_packet){
+
 		unsigned short crc_val;
 		crc_val = (slip_in[slip_in_ptr-1] << 8) | slip_in[slip_in_ptr];
+
+		for(int i = 0; i < slip_in_ptr; i++){
+			QueueSend(&Queue_Uart0_Tx, &slip_in[i]);
+		}
+		char  newline[] = "\r\n";
+		for(int i = 0; i < 2; i++){
+			QueueSend(&Queue_Uart0_Tx, &newline[i]);
+		}
 
 		crc = crc_init();
 		crc = crc_update(crc, slip_in, slip_in_ptr-1);
@@ -119,4 +130,3 @@ void slip_init (void)
 	slip_in_ptr = -1;
 }
 /***************************************************************************/
-

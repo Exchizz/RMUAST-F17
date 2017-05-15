@@ -25,7 +25,7 @@
 #define TASK_AQ_SPOOF    9
 /* Task defins end*/
 
-#define QUEUE_SIZE_UART 15
+#define QUEUE_SIZE_UART 100
 #define QUEUE_SIZE_CAN 15 // Enough messages to keep lat, lon, dop, fix, satellites, height
 #define QUEUE_SIZE_GPS_POSE 5
 
@@ -44,8 +44,8 @@ QueueHandle_t Queue_gps_pose;
 crc_t crc;
 
 int main(){
-	CLKPR = (1 << CLKPCE); // Enable change of CLKPS bits
-	CLKPR = (1 << CLKPS0) ; // Set prescaler to 2, system clock to 8 MHz as said in datasheet to at90can128
+	//CLKPR = (1 << CLKPCE); // Enable change of CLKPS bits
+	//CLKPR = (1 << CLKPS0) ; // Set prescaler to 2, system clock to 8 MHz as said in datasheet to at90can128
 
 	/* Initialize queues */
 	Queue_Uart0_Rx  = QueueCreate(QUEUE_SIZE_UART, sizeof(uint8_t));
@@ -75,6 +75,8 @@ int main(){
 	uart_init(USART_1);
 	/* Setup Uart end */
 
+	sei(); /* enable interrupts */
+
 	scheduler_init();
 
 	/* Create tasks*/
@@ -82,11 +84,11 @@ int main(){
 
 	// Uart 0
 	create_task(TASK_UART0_TX, uart0_tx_task);
-	create_task(TASK_UART0_RX, uart0_rx_task);
+	//create_task(TASK_UART0_RX, uart0_rx_task);
 
 	// Uart 1
 	create_task(TASK_UART1_TX, uart1_tx_task);
-	create_task(TASK_UART1_RX, uart1_rx_task);
+	//create_task(TASK_UART1_RX, uart1_rx_task);
 
 	// CAN
 	create_task(TASK_CAN_RX, can_rx_task);
