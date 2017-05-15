@@ -1,6 +1,6 @@
 THUMB\ Release/ff.o: \
- /home/exchizz/SDU/Skole/Bachelor/Drones/M4/firmware/onboard/ff.c \
- /home/exchizz/SDU/Skole/Bachelor/Drones/M4/firmware/onboard/ff.h \
- /home/exchizz/SDU/Skole/Bachelor/Drones/M4/firmware/onboard/integer.h \
- /home/exchizz/SDU/Skole/Bachelor/Drones/M4/firmware/onboard/ffconf.h \
- /home/exchizz/SDU/Skole/Bachelor/Drones/M4/firmware/onboard/diskio.h
+ /home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/ff.c \
+ /home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/ff.h \
+ /home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/integer.h \
+ /home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/ffconf.h \
+ /home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/diskio.h

@@ -44,8 +44,8 @@ QueueHandle_t Queue_gps_pose;
 crc_t crc;
 
 int main(){
-	//CLKPR = (1 << CLKPCE); // Enable change of CLKPS bits
-	//CLKPR = (1 << CLKPS0) ; // Set prescaler to 2, system clock to 8 MHz as said in datasheet to at90can128
+	CLKPR = (1 << CLKPCE); // Enable change of CLKPS bits
+	CLKPR = (1 << CLKPS0) ; // Set prescaler to 2, system clock to 8 MHz as said in datasheet to at90can128
 
 	/* Initialize queues */
 	Queue_Uart0_Rx  = QueueCreate(QUEUE_SIZE_UART, sizeof(uint8_t));
@@ -61,7 +61,7 @@ int main(){
 	/* Initialize queues end*/
 
 	/* Setup peripherals */
-	esp_init(ESP_NORMAL_MODE);
+	//esp_init(ESP_NORMAL_MODE);
 	led_init();
 	can_init();
 	/* Setup peripherals end*/

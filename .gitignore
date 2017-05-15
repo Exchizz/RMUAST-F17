@@ -2,3 +2,7 @@ build/
 devel/
 *.png
 *.pyc
+*.o
+*.tags
+*.tags1
+*.swp

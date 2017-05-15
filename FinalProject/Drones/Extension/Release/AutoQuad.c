@@ -29,6 +29,13 @@ void aq_spoof_task(uint8_t my_state){
 	if(QueueReceive(&Queue_gps_pose,&pose)){
 		CAN_frame tx_frame;
 
+
+                        char crc_ok[] = "POS ok\r\n";
+                        for(int i = 0; i < 8; i++){
+                                QueueSend(&Queue_Uart0_Tx,&crc_ok[i]);
+                        }
+
+
         // Latitude
 		tx_frame = messageCreater.Create_Stream_double(pose.lat, CAN_DOC_LAT);
         QueueSend(&Queue_CAN_Tx, &tx_frame);

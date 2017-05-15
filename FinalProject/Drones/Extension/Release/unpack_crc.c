@@ -59,7 +59,7 @@ void task_slip_decode_crc_task(uint8_t my_state){
 
 		unsigned short crc_val;
 		crc_val = (slip_in[slip_in_ptr-1] << 8) | slip_in[slip_in_ptr];
-
+/*
 		for(int i = 0; i < slip_in_ptr; i++){
 			QueueSend(&Queue_Uart0_Tx, &slip_in[i]);
 		}
@@ -67,7 +67,7 @@ void task_slip_decode_crc_task(uint8_t my_state){
 		for(int i = 0; i < 2; i++){
 			QueueSend(&Queue_Uart0_Tx, &newline[i]);
 		}
-
+*/
 		crc = crc_init();
 		crc = crc_update(crc, slip_in, slip_in_ptr-1);
 		crc = crc_finalize(crc);

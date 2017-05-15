@@ -38,6 +38,7 @@
 canSensorsStruct_t canSensorsData;
 
 void canSensorsReceiveTelem(uint8_t canId, uint8_t doc, void *data) {
+
     // Mathias
     // Check if switch is 0 (+-100 is limit)
 
