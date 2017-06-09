@@ -10971,13 +10971,13 @@ Linker script and memory map
  .bss.APP_Rx_Buffer
                 0x20014d04      0x400 THUMB Release/usbd_cdc_msc_core.o
                 0x20014d04                APP_Rx_Buffer
- .bss.prevRates.11626
+ .bss.prevRates.11629
                 0x20015104        0xc quatos.a(quatos.o)
- .bss.bsBuf     0x20015110     0x1e00 quatos.a(quatos.o)
-                0x20015110                bsBuf
- .bss.overridden.11627
-                0x20016f10        0x4 quatos.a(quatos.o)
- .bss.loops.10350
+ .bss.overridden.11630
+                0x20015110        0x4 quatos.a(quatos.o)
+ .bss.bsBuf     0x20015114     0x1e00 quatos.a(quatos.o)
+                0x20015114                bsBuf
+ .bss.loops.10353
                 0x20016f14        0x4 quatos.a(quatos_dca.o)
  .bss.libc.__format_extender
                 0x20016f18        0x4 /usr/share/crossworks_for_arm_2.3/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
@@ -11579,7 +11579,7 @@ OUTPUT(THUMB Release/autoquad.elf elf32-littlearm)
  .debug_frame   0x0000b78c      0x790 /usr/share/crossworks_for_arm_2.3/lib/libdebugio_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libdebugio.o)
  .debug_frame   0x0000bf1c       0xa0 /usr/share/crossworks_for_arm_2.3/lib/libc_user_libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(user_libc.o)
 
-.debug_info     0x00000000    0xa61c4
+.debug_info     0x00000000    0xa621e
  .debug_info    0x00000000      0x386 THUMB Release/main_ctl.o
  .debug_info    0x00000386      0x373 THUMB Release/digital.o
  .debug_info    0x000006f9     0x1f4c THUMB Release/util.o
@@ -11693,14 +11693,14 @@ OUTPUT(THUMB Release/autoquad.elf elf32-littlearm)
  .debug_info    0x000a06be      0x1f1 THUMB Release/arm_std_f32.o
  .debug_info    0x000a08af      0x12a THUMB Release/arm_copy_f32.o
  .debug_info    0x000a09d9      0x125 THUMB Release/arm_fill_f32.o
- .debug_info    0x000a0afe     0x2e48 quatos.a(quatos.o)
- .debug_info    0x000a3946      0xef3 quatos.a(quatos_dca.o)
- .debug_info    0x000a4839      0x5ac /usr/share/crossworks_for_arm_2.3/lib/libm_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libm2.o)
- .debug_info    0x000a4de5      0xd02 /usr/share/crossworks_for_arm_2.3/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
- .debug_info    0x000a5ae7       0x37 /usr/share/crossworks_for_arm_2.3/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(__vfprintf_double_long_long.o)
- .debug_info    0x000a5b1e       0x71 /usr/share/crossworks_for_arm_2.3/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(__vfscanf_double_long_long.o)
- .debug_info    0x000a5b8f      0x55f /usr/share/crossworks_for_arm_2.3/lib/libdebugio_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libdebugio.o)
- .debug_info    0x000a60ee       0xd6 /usr/share/crossworks_for_arm_2.3/lib/libc_user_libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(user_libc.o)
+ .debug_info    0x000a0afe     0x2e75 quatos.a(quatos.o)
+ .debug_info    0x000a3973      0xf20 quatos.a(quatos_dca.o)
+ .debug_info    0x000a4893      0x5ac /usr/share/crossworks_for_arm_2.3/lib/libm_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libm2.o)
+ .debug_info    0x000a4e3f      0xd02 /usr/share/crossworks_for_arm_2.3/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)
+ .debug_info    0x000a5b41       0x37 /usr/share/crossworks_for_arm_2.3/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(__vfprintf_double_long_long.o)
+ .debug_info    0x000a5b78       0x71 /usr/share/crossworks_for_arm_2.3/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(__vfscanf_double_long_long.o)
+ .debug_info    0x000a5be9      0x55f /usr/share/crossworks_for_arm_2.3/lib/libdebugio_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libdebugio.o)
+ .debug_info    0x000a6148       0xd6 /usr/share/crossworks_for_arm_2.3/lib/libc_user_libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(user_libc.o)
 
 .debug_abbrev   0x00000000    0x12e5a
  .debug_abbrev  0x00000000      0x1ae THUMB Release/main_ctl.o
@@ -12653,9 +12653,9 @@ OUTPUT(THUMB Release/autoquad.elf elf32-littlearm)
  .debug_str     0x000168c2       0xc3 THUMB Release/arm_fill_f32.o
                                 0x240 (size before relaxing)
  .debug_str     0x00016985      0x3e9 quatos.a(quatos.o)
-                               0x20bd (size before relaxing)
+                               0x20df (size before relaxing)
  .debug_str     0x00016d6e       0x36 quatos.a(quatos_dca.o)
-                                0x515 (size before relaxing)
+                                0x537 (size before relaxing)
  .debug_str     0x00016da4      0x157 /usr/share/crossworks_for_arm_2.3/lib/libm_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libm2.o)
                                 0x209 (size before relaxing)
  .debug_str     0x00016efb      0x54e /usr/share/crossworks_for_arm_2.3/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a(libc2.o)

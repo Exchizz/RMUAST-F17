@@ -24,13 +24,13 @@ bool Session::packet_to_me(CAN_frame &frame){
 	uint8_t retval = false;
 
 	uint8_t *frame_data = ( uint8_t * ) &frame.data;
-	for(int i = 0; i < 4; i++){
-		QueueSend(&Queue_Uart0_Tx,&frame_data[i]);
-	}
-	char ch = '\r';
-	QueueSend(&Queue_Uart0_Tx,&ch);
-	ch = '\n';
-	QueueSend(&Queue_Uart0_Tx,&ch);
+//	for(int i = 0; i < 4; i++){
+//		QueueSend(&Queue_Uart0_Tx,&frame_data[i]);
+//	}
+//	char ch = '\r';
+//	QueueSend(&Queue_Uart0_Tx,&ch);
+//	ch = '\n';
+//	QueueSend(&Queue_Uart0_Tx,&ch);
 
 	uint8_t recv_target_id = ((frame.id & CAN_TID_MASK) >> (9-3));
 	if( frame_data[2] == uuid[0] || source_id == recv_target_id){

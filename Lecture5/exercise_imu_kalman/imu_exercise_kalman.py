@@ -146,12 +146,16 @@ for line in f:
 	pitch_hat_minus = pitch_last + error_state
 	prob = prob_last + Q_term
 
+	print "prob: ", prob
 	# Kalman correction step (we have new data in each iteration)
 	kalman_gain = prob / ( prob + Rk )
 
+	#print kalman_gain
 	# define which value to plot as the Kalman filter estimate
 	kalman_estimate = pitch_hat_minus + kalman_gain * (pitch - pitch_hat_minus)
+	print kalman_gain
 	prob = prob_last * (1 - kalman_gain)
+	print "prob2: ", prob
 
 	# Define last variables
 	prob_last = prob

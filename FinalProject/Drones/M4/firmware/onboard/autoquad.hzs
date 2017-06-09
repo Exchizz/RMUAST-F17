@@ -19,7 +19,6 @@
   <ProjectSessionItem path="autoquad" name="unnamed" />
   <ProjectSessionItem path="autoquad;autoquad" name="unnamed" />
   <ProjectSessionItem path="autoquad;autoquad;Source Files" name="unnamed" />
-  <ProjectSessionItem path="autoquad;autoquad;Source Files;CAN" name="unnamed" />
  </Project>
  <Register1>
   <RegisterWindow openNodes="CPU - Current Context" binaryNodes="" hiddenNodes="" unsignedNodes="" visibleGroups="CPU - Current Context;CPU" decimalNodes="" octalNodes="" asciiNodes="" name="autoquad" />
@@ -51,9 +50,13 @@
  </Watch4>
  <Files>
   <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/aq_mavlink.h" y="14" path="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/aq_mavlink.h" left="0" selected="0" name="unnamed" top="10" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/canSensors.c" y="51" path="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/canSensors.c" left="0" selected="0" name="unnamed" top="42" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/main_ctl.c" y="30" path="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/main_ctl.c" left="0" selected="1" name="unnamed" top="19" />
-  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/can.c" y="384" path="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/can.c" left="0" selected="0" name="unnamed" top="379" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="38" debugPath="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/canSensors.c" y="100" path="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/canSensors.c" left="0" selected="0" name="unnamed" top="70" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/main_ctl.c" y="30" path="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/main_ctl.c" left="0" selected="0" name="unnamed" top="19" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/can.c" y="329" path="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/can.c" left="0" selected="0" name="unnamed" top="260" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/aq.h" y="34" path="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/aq.h" left="0" selected="0" name="unnamed" top="15" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/can.h" y="72" path="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/can.h" left="0" selected="0" name="unnamed" top="60" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/aq_mavlink.c" y="606" path="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/aq_mavlink.c" left="0" selected="0" name="unnamed" top="592" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Latin1" x="0" debugPath="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/nav.c" y="202" path="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard/nav.c" left="0" selected="1" name="unnamed" top="182" />
  </Files>
  <ARMCrossStudioWindow activeProject="autoquad" autoConnectTarget="ST-LINK/V2" debugSearchFileMap="" fileDialogInitialDirectory="/home/mneerup/SDU/Skole/8.Semester/EMMUAST/RMUAST-F17/FinalProject/Drones/M4/firmware/onboard" fileDialogDefaultFilter="*.a" autoConnectCapabilities="266111" debugSearchPath="" buildConfiguration="THUMB Release" />
 </session>
